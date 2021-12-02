@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Layout, Row, Col, DatePicker, Button, Space } from 'antd';
 import HighestVolumeForm from './HighestVolumeForm';
+import axios from 'axios';
 
 const { Text, Title } = Typography;
 const { RangePicker } = DatePicker;
 
 const Statistics = () => {
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get(
+        'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=eur&from=1637648561&to=1638339761'
+      );
+      return response.data;
+    }
+    const getData = async () => {
+      const response = await fetchData();
+      return response;
+    };
+    console.log(getData());
+  }, []);
+
   return (
     <Layout style={{ display: 'flex', height: '100%', padding: 35 }}>
       <Title level={1}>Bitcoin statistics</Title>
